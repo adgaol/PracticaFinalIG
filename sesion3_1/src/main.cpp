@@ -48,6 +48,7 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M);
    GLfloat rotX = 0.0f;
    GLfloat rotY = 0.0f;
    GLfloat rotZ = 0.0f;
+   GLfloat rotF = 0.0f;
    GLfloat rotAY = 0.0f;
    GLfloat desZ = 0.0f;
    GLfloat desSZ = 0.0f;
@@ -55,7 +56,7 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M);
    GLfloat desX = 0.0f;
    GLfloat desY = 0.0f;
    GLfloat zoom = 1.0f;
-      GLfloat Xc  =  0.0f;
+   GLfloat Xc  =  0.0f;
    GLfloat Yc  =  0.0f;
    GLfloat luz  =  1.0f;
    bool    leftbutton = false;
@@ -68,7 +69,7 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 // Luces
     #define NLD 1
     #define NLP 1
-    #define NLF 3
+    #define NLF 2
     Light   lightG;
     Light   lightD[NLD];
     Light   lightP[NLP];
@@ -85,8 +86,11 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     Texture *texEarth;
     Texture *texBox;
     Texture *texWood;
-    Texture *texMetal; 
-    Texture *texfloor; 
+    Texture *texMetalAzul; 
+    Texture *texMetalAmarillo; 
+    Texture *texMetalRojo; 
+    Texture *texfloor;
+    Texture *texGotele;
 int main(int argc, char** argv) {
 
  // Inicializamos GLUT y el contexto de OpenGL
@@ -167,59 +171,17 @@ void funInit() {
      texLight = new Texture(0,"resources/textures/imgLight.bmp");    
      texChess = new Texture(1,"resources/textures/imgChess.bmp");    
      texEarth = new Texture(2,"resources/textures/imgEarth.bmp");   
-     texBox = new Texture(3,"resources/textures/imgDiffuse.bmp"); 
-     texWood = new Texture(0,"resources/textures/imgMadera.bmp"); 
-     texMetal = new Texture(5,"resources/textures/imgMetal.bmp"); 
-     texfloor= new Texture(4,"resources/textures/floor2.bmp");
-//  // Luz ambiental global
-//     lightG.ambient      = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-//     
-//  // Luces direccionales
-//     lightD[0].direction = glm::vec3(-1.0f, 0.0f, 0.0f);
-//     lightD[0].ambient   = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-//     lightD[0].diffuse   = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-//     lightD[0].specular  = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-//     
-//  // Luces posicionales
-//     lightP[0].position = glm::vec3(0.0f, 5.0f, 0.0f);
-//    lightP[0].ambient  = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-//    lightP[0].diffuse  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//    lightP[0].specular = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//    lightP[0].c0 = 1.00f;
-//    lightP[0].c1 = 0.22f;
-//    lightP[0].c2 = 0.20f;
-//    
-//  // Luces focales
-//     lightF[0].position  = glm::vec3(-2.0f,  5.0f,  2.0f);
-//     lightF[0].direction = glm::vec3( 2.0f, -2.0f, -5.0f);
-//     lightF[0].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-//     lightF[0].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//     lightF[0].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//     lightF[0].innerCutOff = 10.0f;
-//     lightF[0].outerCutOff = lightF[0].innerCutOff + 5.0f;
-//     lightF[0].c0 = 1.000f;
-//     lightF[0].c1 = 0.090f;
-//     lightF[0].c2 = 0.032f;
-//     lightF[1].position  = glm::vec3( 2.0f,  1.0f,  5.0f);
-//     lightF[1].direction = glm::vec3(-2.0f, -2.0f, -5.0f);
-//     lightF[1].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-//     lightF[1].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//     lightF[1].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//     lightF[1].innerCutOff = 5.0f;
-//     lightF[1].outerCutOff = lightF[1].innerCutOff + 1.0f;
-//     lightF[1].c0 = 1.000f;
-//     lightF[1].c1 = 0.090f;
-//     lightF[1].c2 = 0.032f;
-//      lightF[2].position  = glm::vec3( 0.0f,  0.0f,  0.0f);
-//     lightF[2].direction = glm::vec3(-2.0f, -2.0f, -5.0f);
-//     lightF[2].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-//     lightF[2].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//     lightF[2].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-//     lightF[2].innerCutOff = 5.0f;
-//     lightF[2].outerCutOff = lightF[1].innerCutOff + 1.0f;
-//     lightF[2].c0 = 1.000f;
-//     lightF[2].c1 = 0.090f;
-//     lightF[2].c2 = 0.032f;
+     texBox = new Texture(2,"resources/textures/imgDiffuse.bmp"); 
+     texWood = new Texture(2,"resources/textures/imgMadera.bmp"); 
+     texMetalAzul = new Texture(2,"resources/textures/imgMetalAzul.bmp");
+     texMetalAmarillo = new Texture(2,"resources/textures/imgMetalAmarillo.bmp");
+     texMetalRojo=new Texture(2,"resources/textures/imgMetalRojo.bmp");
+     texfloor= new Texture(2,"resources/textures/imgWood.bmp");
+     texGotele=new Texture(2,"resources/textures/imgGotele.bmp");
+     
+     // Luz ambiental global
+     lightG.ambient      = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+
   // Materiales
      matLuces.ambient   = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
      matLuces.diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
@@ -254,63 +216,17 @@ void funReshape(int wnew, int hnew) {
 }
 
 void funDisplay() {
-     // Luz ambiental global
-     lightG.ambient      = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-//     
-  // Luces direccionales
-     lightD[0].direction = glm::vec3(-1.0f, 0.0f, 0.0f);
-     lightD[0].ambient   = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
-     lightD[0].diffuse   = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-     lightD[0].specular  = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-     
-  // Luces posicionales
-    lightP[0].position = glm::vec3(0.0f, 3.87f, 0.0f);
-    lightP[0].ambient  = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-    lightP[0].diffuse  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-    lightP[0].specular = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-    lightP[0].c0 = 1.00f;
-    lightP[0].c1 = 0.22f;
-    lightP[0].c2 = 0.20f;
-    lightP[1].position = glm::vec3(0.0f,1.95f, -1.25f);
-    lightP[1].ambient  = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-    lightP[1].diffuse  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-    lightP[1].specular = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-    lightP[1].c0 = 1.00f;
-    lightP[1].c1 = 0.22f;
-    lightP[1].c2 = 0.20f;
-    
-  // Luces focales
-//     lightF[0].position  = glm::vec3(0.0f+desX,  0.5f+desY,  0.0f+desZ);
-    lightF[0].position  = glm::vec3(0.0f,1.95f, -0.25f);
-     lightF[0].direction = glm::vec3( 1.0f, -1.0f, 0.0f);
-     lightF[0].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-     lightF[0].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[0].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[0].innerCutOff = 10.0f;
-     lightF[0].outerCutOff = lightF[0].innerCutOff + 5.0f;
-     lightF[0].c0 = 1.000f;
-     lightF[0].c1 = 0.090f;
-     lightF[0].c2 = 0.032f;
-     lightF[1].position  = glm::vec3( 0.0f,1.95f, -0.25f);
-     lightF[1].direction = glm::vec3(-1.0f, -1.0f, 0.0f);
-     lightF[1].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-     lightF[1].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[1].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[1].innerCutOff = 10.0f;
-     lightF[1].outerCutOff = lightF[1].innerCutOff + 5.0f;
-     lightF[1].c0 = 1.000f;
-     lightF[1].c1 = 0.090f;
-     lightF[1].c2 = 0.032f;
-     lightF[2].position  = glm::vec3(0.0f,1.95f, -0.25f);
-     lightF[2].direction = glm::vec3(0.0f, -1.0f, 0.0f);
-     lightF[2].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-     lightF[2].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[2].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[2].innerCutOff = 5.0f;
-     lightF[2].outerCutOff = lightF[1].innerCutOff + 1.0f;
-     lightF[2].c0 = 1.000f;
-     lightF[2].c1 = 0.090f;
-     lightF[2].c2 = 0.032f;
+
+//     lightF[2].position  = glm::vec3(0.0f,1.95f, -0.25f);
+//     lightF[2].direction = glm::vec3(0.0f, -1.0f, 0.0f);
+//     lightF[2].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+//     lightF[2].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+//     lightF[2].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+//     lightF[2].innerCutOff = 5.0f;
+//     lightF[2].outerCutOff = lightF[1].innerCutOff + 1.0f;
+//     lightF[2].c0 = 1.000f;
+//     lightF[2].c1 = 0.090f;
+//     lightF[2].c2 = 0.032f;
  // Borramos el buffer de color
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -356,16 +272,7 @@ void funDisplay() {
     glm::mat4 Ta = glm::translate(I, glm::vec3(0.0f, 2.5f, 0.0f));
     glm::mat4 Sa = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f,0.25f ,0.25f));
     glm::mat4 Sl = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f,0.5f ,0.25f));
-    //drawObject(P,V,Tz*Rx*Ry);
-    //drawObject(plane,matGold,texEarth,1.0f,P,V,Rx); 
-    //drawCabinAirPlaneBody(P,V,Ry);
-   // drawAirPlaneWings(P,V,Ry);
-    //drawAirPlane(P,V,Ry*Rx);
-   // drawLegsCilinder(P,V,Tz*Ry*Rx);
-  //  drawChair(P,V,Tz*Ry*Rx);
-   // glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
-  //  drawTable(P,V,Tz*Ry*Rx*S);
-  //  drawRoom(P,V,I);
+
    drawAirPlane(P,V,Ry*Rx*Tz*Ty*Ta*Sa);
    drawTwoPlane(P,V,Tz*Ty);
    drawChair(P,V,Tc1*Sa);
@@ -384,10 +291,45 @@ void funDisplay() {
  void setLights(glm::mat4 P, glm::mat4 V) {
      
      objShaders->setLight("ulightG",lightG);
+       // Luces direccionales
+     lightD[0].direction = glm::vec3(0.0f, 0.0f, -1.0f);
+     lightD[0].ambient   = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+     lightD[0].diffuse   = glm::vec4(0.4f, 0.4f, 0.4f, 1.0f);
+     lightD[0].specular  = glm::vec4(0.4f, 0.4f, 0.4f, 1.0f);
      for(int i=0; i<NLD; i++) objShaders->setLight("ulightD["+std::to_string(i)+"]",lightD[i]);
+       // Luces posicionales
+    lightP[0].position = glm::vec3(0.0f, 3.87f, 0.0f);
+    lightP[0].ambient  = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+    lightP[0].diffuse  = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+    lightP[0].specular = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+    lightP[0].c0 = 1.00f;
+    lightP[0].c1 = 0.22f;
+    lightP[0].c2 = 0.20f;
      for(int i=0; i<NLP; i++) objShaders->setLight("ulightP["+std::to_string(i)+"]",lightP[i]);
+     glm::mat4 Rf = glm::rotate   (I, glm::radians(rotF), glm::vec3(0.0f, 1.0f, 0.0f));
+       // Luces focales
+     lightF[0].position  = glm::vec3(0.1f,1.95f, -0.25f);
+     lightF[0].direction =Rf* glm::vec4( 1.0f, -1.0f, 0.0f,1.0f);
+     lightF[0].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+     lightF[0].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+     lightF[0].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+     lightF[0].innerCutOff = 10.0f;
+     lightF[0].outerCutOff = lightF[0].innerCutOff + 5.0f;
+     lightF[0].c0 = 1.000f;
+     lightF[0].c1 = 0.090f;
+     lightF[0].c2 = 0.032f;
+          lightF[1].position  = glm::vec3( -0.1f,1.95f, -0.25f);
+     lightF[1].direction = Rf*glm::vec4(-1.0f, -1.0f, 0.0f,1.0f);
+     lightF[1].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+     lightF[1].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+     lightF[1].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+     lightF[1].innerCutOff = 10.0f;
+     lightF[1].outerCutOff = lightF[1].innerCutOff + 5.0f;
+     lightF[1].c0 = 1.000f;
+     lightF[1].c1 = 0.090f;
+     lightF[1].c2 = 0.032f;
      for(int i=0; i<NLF; i++) objShaders->setLight("ulightF["+std::to_string(i)+"]",lightF[i]);
-    
+   // glm::mat4 Rf = glm::rotate   (I, glm::radians(rotF), glm::vec3(0.0f, 1.0f, 0.0f));
     for(int i=0; i<NLP; i++) {
         glm::mat4 M = glm::scale(glm::translate(I,lightP[i].position),glm::vec3(0.10f));
        
@@ -418,15 +360,15 @@ void drawObject(Mesh *object, Material material, Texture *texture, GLfloat mixVa
 //}
 void drawPlaneS(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
       glm::mat4 T = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f)); 
-       drawObject(plane,matLuces,texfloor,1.0f,P,V,M*T);
+       drawObject(plane,matLuces,texfloor,0.4f,P,V,M*T);
 }
 void drawPlaneP(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
       glm::mat4 T = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f)); 
-       drawObject(plane,matGold,texWood,0.0f,P,V,M*T);
+       drawObject(plane,matGold,texMetalAzul,0.4f,P,V,M*T);
 }
 void drawPlaneT(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
       glm::mat4 T = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f)); 
-       drawObject(plane,matLuces,texLight,1.0f,P,V,M*T);
+       drawObject(plane,matLuces,texEarth,0.5f,P,V,M*T);
 }
 void drawTwoPlane(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 Tp = glm::translate(I, glm::vec3(0.0f, 2.0f, -2.0f));
@@ -446,9 +388,9 @@ void drawAirPlaneBody(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 Sh = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f,0.05f ,0.3f));
     glm::mat4 Tv = glm::translate(I, glm::vec3(-0.60f, 0.2f, 0.0f));
     glm::mat4 Th = glm::translate(I, glm::vec3(-0.60f, 0.0f, 0.0f));
-    drawObject(cube,matLuces,texLight,0.0f,P,V,M*S);
-    drawObject(cube,matLuces,texLight,0.0f,P,V,M*Tv*Sv);
-    drawObject(cube,matLuces,texLight,0.0f,P,V,M*Th*Sh);
+    drawObject(cube,matLuces,texMetalAzul,1.0f,P,V,M*S);
+    drawObject(cube,matLuces,texMetalAzul,1.0f,P,V,M*Tv*Sv);
+    drawObject(cube,matLuces,texMetalAzul,1.0f,P,V,M*Th*Sh);
 }
 void drawCabinAirPlaneBody(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f, 0.05f, 0.05f));
@@ -560,15 +502,18 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 void funKeyboard(unsigned char key, int x, int y) {
    
     switch(key) {
-        case 'a':   desY -= 0.1f;  break;
-        case 'A':   desY += 0.1f;  break;
+        case 'a': if(desY>-1.25)  desY -= 0.1f;  break;
+        case 'A': if(desY<4)  desY += 0.1f;  break;
         case 'i':   rotAY+=90.0f;  break;
         case 'd':   rotAY-=90.0f;  break;
         case 'Q':   desSY+=0.5;    break;
         case 'q':   desSY-=0.5;    break;
         case 'W':   desSZ+=0.5;    break;
         case 'w':   desSZ-=0.5;    break;
+        case 'f':   rotF-=5;    break;
+        case 'F':   rotF+=5;    break;
         default:    desY  = 0.0f;  break;
+        
         
     }
     glutPostRedisplay();
@@ -578,10 +523,10 @@ void funKeyboard(unsigned char key, int x, int y) {
 void funSpecial(int key, int x, int y) {
 
     switch(key) {
-       case GLUT_KEY_UP:    desZ -= 0.1f;   break;
-       case GLUT_KEY_DOWN:  desZ += 0.1f;   break;
-       case GLUT_KEY_LEFT:  desX -= 0.1f;   break;
-       case GLUT_KEY_RIGHT: desX += 0.1f;   break;
+       case GLUT_KEY_UP:  if(desZ>-7)   desZ -= 0.1f;   break;
+       case GLUT_KEY_DOWN: if(desZ<7)  desZ += 0.1f;   break;
+       case GLUT_KEY_LEFT: if(desX>-7)  desX -= 0.1f;   break;
+       case GLUT_KEY_RIGHT:if(desX<7)  desX += 0.1f;   break;
        default:                             
            desX = 0.0f;
            rotAY = 0.0f;

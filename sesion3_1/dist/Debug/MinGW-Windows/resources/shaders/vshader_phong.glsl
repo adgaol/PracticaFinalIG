@@ -16,7 +16,7 @@ void main() {
 
     gl_Position = uPVM * vec4(inPosition,1.0);
 
-    vN   = (uN*vec4(inNormal,0.0)).xyz;
+    vN   = (uN*vec4(inNormal  ,0.0)).xyz;
     vpos = (uM*vec4(inPosition,1.0)).xyz;
     vtex = inTexture;
 

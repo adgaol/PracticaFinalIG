@@ -82,6 +82,10 @@
         <itemPath>dist/Debug/MinGW-Windows/resources/shaders/vshader_phong_direccional.glsl</itemPath>
       </logicalFolder>
       <logicalFolder name="textures" displayName="textures" projectFiles="true">
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/floor.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/floor1.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/floor2.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/floor3.bmp</itemPath>
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgChess.bmp</itemPath>
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgDiffuse.bmp</itemPath>
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgEarth.bmp</itemPath>
@@ -91,7 +95,12 @@
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgMadera2.bmp</itemPath>
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgMadera3.bmp</itemPath>
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgMetal.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgMetalAmarillo.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgMetalAzul.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgMetalRojo.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgPared.bmp</itemPath>
         <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgSpecular.bmp</itemPath>
+        <itemPath>dist/Debug/MinGW-Windows/resources/textures/imgWood.bmp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="src" displayName="src" projectFiles="true">
@@ -267,6 +276,26 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor1.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor2.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor3.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="dist/Debug/MinGW-Windows/resources/textures/imgChess.bmp"
             ex="false"
             tool="3"
@@ -312,7 +341,32 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgMetalAmarillo.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgMetalAzul.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgMetalRojo.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgPared.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="dist/Debug/MinGW-Windows/resources/textures/imgSpecular.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgWood.bmp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -527,6 +581,26 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor1.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor2.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/floor3.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="dist/Debug/MinGW-Windows/resources/textures/imgChess.bmp"
             ex="false"
             tool="3"
@@ -572,7 +646,32 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgMetalAmarillo.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgMetalAzul.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgMetalRojo.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgPared.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="dist/Debug/MinGW-Windows/resources/textures/imgSpecular.bmp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="dist/Debug/MinGW-Windows/resources/textures/imgWood.bmp"
             ex="false"
             tool="3"
             flavor2="0">
