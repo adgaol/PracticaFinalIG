@@ -79,6 +79,7 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     Material matLuces;
     Material matRuby;
     Material matGold;
+    Material matObsidian;
     
  // Texturas
     Texture *texLight;
@@ -91,6 +92,7 @@ void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     Texture *texMetalRojo; 
     Texture *texfloor;
     Texture *texGotele;
+    Texture *texMaderaRoja;
 int main(int argc, char** argv) {
 
  // Inicializamos GLUT y el contexto de OpenGL
@@ -177,10 +179,10 @@ void funInit() {
      texMetalAmarillo = new Texture(2,"resources/textures/imgMetalAmarillo.bmp");
      texMetalRojo=new Texture(2,"resources/textures/imgMetalRojo.bmp");
      texfloor= new Texture(2,"resources/textures/imgWood.bmp");
-     texGotele=new Texture(2,"resources/textures/imgGotele.bmp");
-     
+     texGotele=new Texture(2,"resources/textures/imgPared.bmp");
+     texMaderaRoja=new Texture(2,"resources/textures/imgMaderaRoja.bmp");
      // Luz ambiental global
-     lightG.ambient      = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+     lightG.ambient      = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
   // Materiales
      matLuces.ambient   = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -194,7 +196,12 @@ void funInit() {
      matGold.ambient    = glm::vec4(0.247250f, 0.199500f, 0.074500f, 1.00f);
      matGold.diffuse    = glm::vec4(0.751640f, 0.606480f, 0.226480f, 1.00f);
      matGold.specular   = glm::vec4(0.628281f, 0.555802f, 0.366065f, 1.00f);
-     matGold.shininess  = 51.2f;    
+     matGold.shininess  = 51.2f;   
+     matObsidian.ambient    = glm::vec4(0.05375f, 0.05f, 0.06625f, 0.82f );
+     matObsidian.diffuse    = glm::vec4(0.18275f, 0.17f, 0.22525f, 0.82f);
+     matObsidian.specular   = glm::vec4(0.332741f, 0.328634f, 0.346435f, 0.82f );
+     matObsidian.shininess  = 38.4f;   
+   
 }
 
 void funDestroy() {
@@ -294,13 +301,13 @@ void funDisplay() {
        // Luces direccionales
      lightD[0].direction = glm::vec3(0.0f, 0.0f, -1.0f);
      lightD[0].ambient   = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-     lightD[0].diffuse   = glm::vec4(0.4f, 0.4f, 0.4f, 1.0f);
-     lightD[0].specular  = glm::vec4(0.4f, 0.4f, 0.4f, 1.0f);
+     lightD[0].diffuse   = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
+     lightD[0].specular  = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
      for(int i=0; i<NLD; i++) objShaders->setLight("ulightD["+std::to_string(i)+"]",lightD[i]);
        // Luces posicionales
     lightP[0].position = glm::vec3(0.0f, 3.87f, 0.0f);
     lightP[0].ambient  = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-    lightP[0].diffuse  = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+    lightP[0].diffuse  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
     lightP[0].specular = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
     lightP[0].c0 = 1.00f;
     lightP[0].c1 = 0.22f;
@@ -310,7 +317,7 @@ void funDisplay() {
        // Luces focales
      lightF[0].position  = glm::vec3(0.1f,1.95f, -0.25f);
      lightF[0].direction =Rf* glm::vec4( 1.0f, -1.0f, 0.0f,1.0f);
-     lightF[0].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+     lightF[0].ambient   = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
      lightF[0].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
      lightF[0].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
      lightF[0].innerCutOff = 10.0f;
@@ -320,9 +327,9 @@ void funDisplay() {
      lightF[0].c2 = 0.032f;
           lightF[1].position  = glm::vec3( -0.1f,1.95f, -0.25f);
      lightF[1].direction = Rf*glm::vec4(-1.0f, -1.0f, 0.0f,1.0f);
-     lightF[1].ambient   = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+     lightF[1].ambient   = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
      lightF[1].diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightF[1].specular  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
+     lightF[1].specular  = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
      lightF[1].innerCutOff = 10.0f;
      lightF[1].outerCutOff = lightF[1].innerCutOff + 5.0f;
      lightF[1].c0 = 1.000f;
@@ -364,7 +371,7 @@ void drawPlaneS(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 }
 void drawPlaneP(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
       glm::mat4 T = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f)); 
-       drawObject(plane,matGold,texMetalAzul,0.4f,P,V,M*T);
+       drawObject(plane,matObsidian,texGotele,0.5f,P,V,M*T);
 }
 void drawPlaneT(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
       glm::mat4 T = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f)); 
@@ -388,16 +395,16 @@ void drawAirPlaneBody(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 Sh = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f,0.05f ,0.3f));
     glm::mat4 Tv = glm::translate(I, glm::vec3(-0.60f, 0.2f, 0.0f));
     glm::mat4 Th = glm::translate(I, glm::vec3(-0.60f, 0.0f, 0.0f));
-    drawObject(cube,matLuces,texMetalAzul,1.0f,P,V,M*S);
-    drawObject(cube,matLuces,texMetalAzul,1.0f,P,V,M*Tv*Sv);
-    drawObject(cube,matLuces,texMetalAzul,1.0f,P,V,M*Th*Sh);
+    drawObject(cube,matObsidian,texWood,0.5f,P,V,M*S);
+    drawObject(cube,matObsidian,texWood,0.4f,P,V,M*Tv*Sv);
+    drawObject(cube,matObsidian,texWood,0.4f,P,V,M*Th*Sh);
 }
 void drawCabinAirPlaneBody(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f, 0.05f, 0.05f));
     glm::mat4 T = glm::translate(I, glm::vec3(0.25f, 0.15f, 0.0f));
     
     
-    drawObject(cube,matLuces,texLight,0.0f,P,V,M*T*S);
+    drawObject(cube,matObsidian,texLight,0.1f,P,V,M*T*S);
     drawAirPlaneBody(P,V,M);
 }
 void drawAirPlaneWings(glm::mat4 P, glm::mat4 V, glm::mat4 M){
@@ -405,13 +412,13 @@ void drawAirPlaneWings(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 Rx = glm::rotate   (I, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     //glm::mat4 R=Rx*Ry;
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f, 0.75f, 0.15f));
-    drawObject(cilinder,matLuces,texLight,0.0f,P,V,M*Ry*Rx*S);
+    drawObject(cilinder,matObsidian,texWood,0.4f,P,V,M*Ry*Rx*S);
     drawCabinAirPlaneBody(P,V,M);
 }
 void drawAspa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f, 0.15f, 0.06f)); 
     glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.15f, 0.0f));
-    drawObject(cone,matLuces,texLight,0.0f,P,V,M*T*S);  
+    drawObject(cone,matObsidian,texMaderaRoja,1.0f,P,V,M*T*S);  
 }
 void drawHelice(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     
@@ -435,7 +442,7 @@ void drawAirPlaneEngine(glm::mat4 P, glm::mat4 V, glm::mat4 M){
   
     drawHelice(P,V,M*T*Ry*RH*SH);
     
-    drawObject(cilinder,matLuces,texLight,0.0f,P,V,M*RC*S);
+    drawObject(cilinder,matObsidian,texWood,0.5f,P,V,M*RC*S);
 }
 
 void drawAirPlaneWithEngine(glm::mat4 P, glm::mat4 V, glm::mat4 M){
@@ -475,10 +482,10 @@ void drawLegsCilinder(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 T2 = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.0f, 1.0f));
     glm::mat4 T3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f, 0.75f, 0.25f));
-    drawObject(cilinder,matLuces,texLight,0.0f,P,V,M*T1*S);
-    drawObject(cilinder,matLuces,texLight,0.0f,P,V,M*T2*S);
-    drawObject(cilinder,matLuces,texLight,0.0f,P,V,M*T3*S);
-    drawObject(cilinder,matLuces,texLight,0.0f,P,V,M*S);
+    drawObject(cilinder,matObsidian,texWood,0.5f,P,V,M*T1*S);
+    drawObject(cilinder,matObsidian,texWood,0.5f,P,V,M*T2*S);
+    drawObject(cilinder,matObsidian,texWood,0.5f,P,V,M*T3*S);
+    drawObject(cilinder,matObsidian,texWood,0.5f,P,V,M*S);
 }
 void drawChair(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.1f, 1.0f));
@@ -486,14 +493,14 @@ void drawChair(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 T1 = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 1.75f, -0.5f));
      glm::mat4 R = glm::rotate   (I, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     drawLegsCilinder(P,V,M);
-    drawObject(cube,matLuces,texLight,0.0f,P,V,M*T*S);
-    drawObject(cube,matLuces,texLight,0.0f,P,V,M*T1*R*S);
+    drawObject(cube,matObsidian,texWood,0.4f,P,V,M*T*S);
+    drawObject(cube,matObsidian,texWood,0.5f,P,V,M*T1*R*S);
 }
 void drawTable(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 0.1f, 1.0f));
     glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.75f, 0.5f));
     drawLegsCilinder(P,V,M);
-    drawObject(sphere,matLuces,texLight,0.0f,P,V,M*T*S);
+    drawObject(sphere,matObsidian,texWood,0.4f,P,V,M*T*S);
 }
 void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.3f, 2.0f, 0.3f));
