@@ -21,7 +21,7 @@ struct Material {
 };
 
 #define NLD 1
-#define NLP 1
+#define NLP 2
 #define NLF 2
 
 in vec3 vN;
