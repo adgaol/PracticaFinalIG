@@ -49,13 +49,16 @@ void drawBrazo(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMolinoFour(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawPost    (glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawElipsoide(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-void drawDron(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-//
+void drawDron(glm::mat4 P, glm::mat4 V, glm::mat4 M); 
+//ventilador
 void drawBombilla(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAspaVent(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawHeliceVent(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawHeliceVentT(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-
+//vitrina
+void drawBase(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawPicture(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawCristal(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 // Viewport
    int w = 500;
    int h = 500;
@@ -97,12 +100,15 @@ void drawHeliceVentT(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     
  // Materiales
     Material matLuces;
+    Material matTrasparencia;
     Material matRuby;
     Material matGold;
     Material matObsidian;
     
  // Texturas
+    Texture *texMarmol;
     Texture *texLight;
+    Texture *texArtistico;
     Texture *texChess;
     Texture *texEarth;
     Texture *texBox;
@@ -203,6 +209,8 @@ void funInit() {
      texGotele=new Texture(2,"resources/textures/imgPared.bmp");
      texMaderaRoja=new Texture(2,"resources/textures/imgMaderaRoja.bmp");
      texMetro=new Texture(2,"resources/textures/imgMetro.bmp");
+     texArtistico=new Texture(2,"resources/textures/artistico.bmp");
+     texMarmol=new Texture(2,"resources/textures/marmol.bmp");
      // Luz ambiental global
      lightG.ambient      = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -223,7 +231,10 @@ void funInit() {
      matObsidian.diffuse    = glm::vec4(0.18275f, 0.17f, 0.22525f, 0.82f);
      matObsidian.specular   = glm::vec4(0.332741f, 0.328634f, 0.346435f, 0.82f );
      matObsidian.shininess  = 38.4f;   
-   
+     matTrasparencia.ambient   = glm::vec4(0.5f, 0.5f, 0.5f, 0.05f);
+     matTrasparencia.diffuse   = glm::vec4(0.9f, 0.9f, 0.9f, 0.05f);
+     matTrasparencia.specular  = glm::vec4(0.5f, 0.5f, 0.5f, 0.05f);
+     matTrasparencia.shininess = 10.0f;
 }
 
 void funDestroy() {
@@ -297,6 +308,7 @@ void funDisplay() {
     glm::mat4 Tl = glm::translate(I, glm::vec3(0.0f, 1.0f, -0.25f));
     glm::mat4 Ta = glm::translate(I, glm::vec3(0.0f, 2.5f, 0.0f));
     glm::mat4 Td = glm::translate(I, glm::vec3(0.7f, 1.5f, 0.0f));
+    glm::mat4 Tv = glm::translate(I, glm::vec3(-1.0f, 0.6f, -1.4f));
     glm::mat4 Sa = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f,0.25f ,0.25f));
     glm::mat4 Sl = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f,0.5f ,0.25f));
     glm::mat4 Sd = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f,0.25f ,0.25f));
@@ -313,6 +325,7 @@ void funDisplay() {
    drawDron(P,V,Ry*Td*Sd);
    drawBombilla(P,V,Tl);
    drawHeliceVentT(P,V,Tl);
+   drawCristal(P,V,Tv);
  // Intercambiamos los buffers
     glutSwapBuffers();
     
@@ -337,7 +350,7 @@ void funDisplay() {
      lightP[0].c2 = 0.20f;
     
      glm::mat4 Ry = glm::rotate   (I, glm::radians(rotY), glm::vec3(0.0f, 1.0f, 0.0f));
-     lightP[1].position =Ry* glm::vec4(1.0f, 1.45f, 0.0f,1.0f);
+     lightP[1].position =Ry* glm::vec4(0.7f, 1.45f, 0.0f,1.0f);
      lightP[1].ambient  = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
      lightP[1].diffuse  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
      lightP[1].specular = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -617,6 +630,29 @@ void drawTable(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.3f, 2.0f, 0.3f));
     drawObject(cube,matLuces,texEarth,0.0f,P,V,M*S);
+}
+void drawBase(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.4f, 0.6f, 0.4f));
+    drawObject(cube,matObsidian,texWood,0.5f,P,V,M*S);
+}
+void drawPicture(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.3f, 0.3f, 0.05f));
+    glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.0f, 1.030f));
+    drawObject(cube,matLuces,texArtistico,1.0f,P,V,M*S);
+    
+}
+void drawCristal(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.1f, 0.0f));
+    glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.4f, 0.5f, 0.4f));
+     glm::mat4 R = glm::rotate   (I, glm::radians(-30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    drawBase(P,V,M);
+    drawPicture(P,V,M*T*R);
+    glEnable (GL_BLEND) ;
+    glBlendFunc (GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA);
+    glDepthMask (GL_FALSE) ;
+    drawObject(cube,matTrasparencia,texEarth,0.0f,P,V,M*T*S);
+    glDisable(GL_BLEND) ;
+    glDepthMask(GL_TRUE) ;
 }
 void funKeyboard(unsigned char key, int x, int y) {
    
