@@ -50,6 +50,11 @@ void drawMolinoFour(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawPost    (glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawElipsoide(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawDron(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+//
+void drawBombilla(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawAspaVent(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawHeliceVent(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawHeliceVentT(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
 // Viewport
    int w = 500;
@@ -79,7 +84,7 @@ void drawDron(glm::mat4 P, glm::mat4 V, glm::mat4 M);
    Shaders *objShaders;
    
 // Modelos
-   Mesh *object,*plane,*cube,*cilinder,*cone,*sphere;
+   Mesh *object,*plane,*cube,*cilinder,*cone,*sphere;//, *triangle;
 
 // Luces
     #define NLD 1
@@ -170,6 +175,10 @@ void funInit() {
     const char* cubePath = "resources/models/cube.obj";
     cube= new Mesh(cubePath);
     cube->createVao();
+    // Malla con el triangulo
+    //const char* trianglePath = "resources/models/tringle.obj";
+    //triangle= new Mesh(trianglePath);
+    //triangle->createVao();
     // Malla con el cilindro
     const char* cilinderPath = "resources/models/cilinder.obj";
     cilinder= new Mesh(cilinderPath);
@@ -302,6 +311,8 @@ void funDisplay() {
    drawChair(P,V,Tc4*Rc2*Sa);
    drawTable(P,V,Tt3*Sa);
    drawDron(P,V,Ry*Td*Sd);
+   drawBombilla(P,V,Tl);
+   drawHeliceVentT(P,V,Tl);
  // Intercambiamos los buffers
     glutSwapBuffers();
     
@@ -456,6 +467,29 @@ void drawBrazo(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 void drawElipsoide(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(0.5f, 0.2f, 0.5f));
     drawObject(sphere,matObsidian,texMaderaRoja,0.2f,P,V,M*S);
+}
+void drawBombilla(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 S = glm::scale(I, glm::vec3(0.3f, 0.125f, 0.3f));
+    glm::mat4 TBom = glm::translate(I, glm::vec3(0.0f, 2.75f, 0.25f));
+    drawObject(sphere,matObsidian,texMaderaRoja,0.2f,P,V,M*TBom*S);
+}
+void drawAspaVent(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f, 0.4f, 0.002f)); 
+    glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-0.5f, 0.3f));
+    glm::mat4 RAspa = glm::rotate   (I, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    drawObject(cone,matObsidian,texMaderaRoja,1.0f,P,V,M*RAspa*T*S);  
+}
+void drawHeliceVent(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    glm::mat4 R90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0.0f, 1.0f,0.0f));
+    drawAspaVent(P,V,M);
+    drawAspaVent(P,V,M*R90);
+    drawAspaVent(P,V,M*R90*R90);
+    drawAspaVent(P,V,M*R90*R90*R90);
+}
+void drawHeliceVentT(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    glm::mat4 TBom = glm::translate(I, glm::vec3(0.0f, 3.05f, 0.25f));
+    glm::mat4 RH = glm::rotate(I, glm::radians(rotZ), glm::vec3(0.0f, 1.0f, 0.0f));
+    drawHeliceVent(P,V,M*TBom*RH);
 }
 //dibuja el dron
 void drawDron(glm::mat4 P, glm::mat4 V, glm::mat4 M){
