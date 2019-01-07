@@ -114,6 +114,7 @@ void drawHeliceVentT(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     Texture *texGotele;
     Texture *texMaderaRoja;
     Texture *texMetro;
+    Texture *texbodyDron;
 int main(int argc, char** argv) {
 
  // Inicializamos GLUT y el contexto de OpenGL
@@ -203,6 +204,7 @@ void funInit() {
      texGotele=new Texture(2,"resources/textures/imgPared.bmp");
      texMaderaRoja=new Texture(2,"resources/textures/imgMaderaRoja.bmp");
      texMetro=new Texture(2,"resources/textures/imgMetro.bmp");
+     texbodyDron = new Texture(0,"resources/textures/floor3.bmp");
      // Luz ambiental global
      lightG.ambient      = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -451,7 +453,7 @@ void drawMolino(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 RH = glm::rotate(I, glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
     drawHelice(P,V,M*T*T2*R90*R45*RH);
     glm::mat4 Sc = glm::scale(I, glm::vec3(0.025f, 0.1f, 0.025f));
-    drawObject(cilinder,matRuby,texChess,0.0f,P,V,M*T*Sc);
+    drawObject(cilinder,matObsidian,texbodyDron,0.0f,P,V,M*T*Sc);
 }
 //dibuja un brazo del dron
 void drawBrazo(glm::mat4 P, glm::mat4 V, glm::mat4 M){
@@ -460,13 +462,13 @@ void drawBrazo(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 R90 = glm::rotate(I, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     glm::mat4 S = glm::scale(I, glm::vec3(0.075f, 0.075f, 0.075f));
     drawMolino(P,V,M*T*R90*Rx);
-    drawObject(sphere,matGold,texChess,1.0f,P,V,M*T*Rx*S);
+    drawObject(sphere,matObsidian,texbodyDron,0.3f,P,V,M*T*Rx*S);
     drawPost(P,V,M*T);
 }
 //dibuja el cuerpo del dron
 void drawElipsoide(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(0.5f, 0.2f, 0.5f));
-    drawObject(sphere,matObsidian,texMaderaRoja,0.2f,P,V,M*S);
+    drawObject(sphere,matObsidian,texbodyDron,0.2f,P,V,M*S);
 }
 void drawBombilla(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(0.3f, 0.125f, 0.3f));
@@ -530,7 +532,7 @@ void drawAirPlaneWings(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 void drawAspa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f, 0.15f, 0.06f)); 
     glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.15f, 0.0f));
-    drawObject(cone,matObsidian,texMaderaRoja,1.0f,P,V,M*T*S);  
+    drawObject(cone,matObsidian,texfloor,1.0f,P,V,M*T*S);  
 }
 //dibuja una helice
 void drawHelice(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
