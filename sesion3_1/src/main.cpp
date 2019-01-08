@@ -76,6 +76,7 @@ void drawCristal(glm::mat4 P, glm::mat4 V, glm::mat4 M);
    GLfloat Yc  =  0.0f;
    GLfloat luz  =  1.0f;
    GLfloat luz1  =  1.0f;
+   GLfloat techo  =  1.0f;
    GLfloat activador  =  1.0f;
    //Texture * pantalla= new Texture(2,"resources/textures/imgEarth.bmp");
    bool    leftbutton = false;
@@ -83,6 +84,7 @@ void drawCristal(glm::mat4 P, glm::mat4 V, glm::mat4 M);
    bool    encendidaTele=true;
    bool    focal1Encendida=true;
    bool    focal2Encendida=true;
+   bool    techoEncendida=true;
 // Shaders
    Shaders *objShaders;
    
@@ -120,6 +122,7 @@ void drawCristal(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     Texture *texGotele;
     Texture *texMaderaRoja;
     Texture *texMetro;
+    Texture *texbodyDron;
 int main(int argc, char** argv) {
 
  // Inicializamos GLUT y el contexto de OpenGL
@@ -211,6 +214,7 @@ void funInit() {
      texMetro=new Texture(2,"resources/textures/imgMetro.bmp");
      texArtistico=new Texture(2,"resources/textures/artistico.bmp");
      texMarmol=new Texture(2,"resources/textures/marmol.bmp");
+     texbodyDron = new Texture(0,"resources/textures/floor3.bmp");
      // Luz ambiental global
      lightG.ambient      = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -342,9 +346,9 @@ void funDisplay() {
      for(int i=0; i<NLD; i++) objShaders->setLight("ulightD["+std::to_string(i)+"]",lightD[i]);
      // Luces posicionales
      lightP[0].position = glm::vec3(0.0f, 3.87f, 0.0f);
-     lightP[0].ambient  = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-     lightP[0].diffuse  = glm::vec4(0.9f, 0.9f, 0.9f, 1.0f);
-     lightP[0].specular = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+     lightP[0].ambient  = glm::vec4(techo*0.1f,techo* 0.1f,techo* 0.1f, 1.0f);
+     lightP[0].diffuse  = glm::vec4(techo*0.9f,techo* 0.9f,techo* 0.9f, 1.0f);
+     lightP[0].specular = glm::vec4(techo*0.2f,techo* 0.2f,techo* 0.2f, 1.0f);
      lightP[0].c0 = 1.00f;
      lightP[0].c1 = 0.22f;
      lightP[0].c2 = 0.20f;
@@ -394,7 +398,7 @@ void funDisplay() {
      
      for(int i=0; i<NLF; i++) {
         glm::mat4 M = glm::scale(glm::translate(I,lightF[i].position),glm::vec3(0.025f));       
-        drawObject(cube,matLuces,texLight,0.0f,P,V,M);
+        drawObject(cube,matLuces,texLight,1.0f,P,V,M);
      }
  }
 //dibuja los modelos
@@ -444,7 +448,7 @@ void drawPost(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     
     glm::mat4 S = glm::scale(I, glm::vec3(0.05f, 0.5f, 0.05f));
     glm::mat4 T = glm::translate(I, glm::vec3(0.0f, -0.5f, 0.0f));
-     drawObject(cilinder,matGold,texChess,0.0f,P,V,M*T*S); 
+     drawObject(cilinder,matGold,texWood,0.2f,P,V,M*T*S); 
 }
 //dibuja 4 brazos  
 void drawMolinoFour(glm::mat4 P, glm::mat4 V, glm::mat4 M){
@@ -464,7 +468,7 @@ void drawMolino(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 RH = glm::rotate(I, glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
     drawHelice(P,V,M*T*T2*R90*R45*RH);
     glm::mat4 Sc = glm::scale(I, glm::vec3(0.025f, 0.1f, 0.025f));
-    drawObject(cilinder,matRuby,texChess,0.0f,P,V,M*T*Sc);
+    drawObject(cilinder,matObsidian,texbodyDron,0.0f,P,V,M*T*Sc);
 }
 //dibuja un brazo del dron
 void drawBrazo(glm::mat4 P, glm::mat4 V, glm::mat4 M){
@@ -473,24 +477,24 @@ void drawBrazo(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 R90 = glm::rotate(I, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     glm::mat4 S = glm::scale(I, glm::vec3(0.075f, 0.075f, 0.075f));
     drawMolino(P,V,M*T*R90*Rx);
-    drawObject(sphere,matGold,texChess,1.0f,P,V,M*T*Rx*S);
+    drawObject(sphere,matObsidian,texbodyDron,0.3f,P,V,M*T*Rx*S);
     drawPost(P,V,M*T);
 }
 //dibuja el cuerpo del dron
 void drawElipsoide(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(0.5f, 0.2f, 0.5f));
-    drawObject(sphere,matObsidian,texMaderaRoja,0.2f,P,V,M*S);
+    drawObject(sphere,matObsidian,texbodyDron,0.2f,P,V,M*S);
 }
 void drawBombilla(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(0.3f, 0.125f, 0.3f));
     glm::mat4 TBom = glm::translate(I, glm::vec3(0.0f, 2.75f, 0.25f));
-    drawObject(sphere,matObsidian,texMaderaRoja,0.2f,P,V,M*TBom*S);
+    drawObject(sphere,matObsidian,texLight,0.2f,P,V,M*TBom*S);
 }
 void drawAspaVent(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f, 0.4f, 0.002f)); 
     glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-0.5f, 0.3f));
     glm::mat4 RAspa = glm::rotate   (I, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    drawObject(cone,matObsidian,texMaderaRoja,1.0f,P,V,M*RAspa*T*S);  
+    drawObject(cone,matObsidian,texfloor,0.5f,P,V,M*RAspa*T*S);  
 }
 void drawHeliceVent(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 R90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0.0f, 1.0f,0.0f));
@@ -543,7 +547,7 @@ void drawAirPlaneWings(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 void drawAspa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f, 0.15f, 0.06f)); 
     glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.15f, 0.0f));
-    drawObject(cone,matObsidian,texMaderaRoja,1.0f,P,V,M*T*S);  
+    drawObject(cone,matObsidian,texfloor,1.0f,P,V,M*T*S);  
 }
 //dibuja una helice
 void drawHelice(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
@@ -629,7 +633,7 @@ void drawTable(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 //Dibuja la lampara
 void drawLamp(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.3f, 2.0f, 0.3f));
-    drawObject(cube,matLuces,texEarth,0.0f,P,V,M*S);
+    drawObject(cube,matRuby,texWood,0.2f,P,V,M*S);
 }
 void drawBase(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(0.4f, 0.6f, 0.4f));
@@ -676,6 +680,7 @@ void funKeyboard(unsigned char key, int x, int y) {
         case 'f': if(focal1Encendida==false){luz=1; focal1Encendida=true;} else  {luz=0; focal1Encendida=false;}break;
         //apagar/encender focal izquierda
         case 'F': if(focal2Encendida==false){luz1=1; focal2Encendida=true;} else  {luz1=0; focal2Encendida=false;}break;
+        case 't': if(techoEncendida==false){techo=1; techoEncendida=true;} else  {techo=0; techoEncendida=false;}break;
         default:     break;
         
         
