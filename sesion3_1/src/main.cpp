@@ -108,20 +108,12 @@ void drawCristal(glm::mat4 P, glm::mat4 V, glm::mat4 M);
     Material matObsidian;
     
  // Texturas
-    Texture *texMarmol;
     Texture *texLight;
     Texture *texArtistico;
-    Texture *texChess;
     Texture *texEarth;
-    Texture *texBox;
     Texture *texWood;
-    Texture *texMetalAzul; 
-    Texture *texMetalAmarillo; 
-    Texture *texMetalRojo; 
     Texture *texfloor;
     Texture *texGotele;
-    Texture *texMaderaRoja;
-    Texture *texMetro;
     Texture *texbodyDron;
 int main(int argc, char** argv) {
 
@@ -200,20 +192,12 @@ void funInit() {
     sphere = new Mesh("resources/models/sphere.obj");
     sphere->createVao();
   // Texturas
-     texLight = new Texture(0,"resources/textures/imgLight.bmp");    
-     texChess = new Texture(1,"resources/textures/imgChess.bmp");    
-     texEarth = new Texture(2,"resources/textures/imgEarth.bmp");   
-     texBox = new Texture(2,"resources/textures/imgDiffuse.bmp"); 
+     texLight = new Texture(0,"resources/textures/imgLight.bmp");     
+     texEarth = new Texture(2,"resources/textures/imgEarth.bmp");  
      texWood = new Texture(2,"resources/textures/imgMadera.bmp"); 
-     texMetalAzul = new Texture(2,"resources/textures/imgMetalAzul.bmp");
-     texMetalAmarillo = new Texture(2,"resources/textures/imgMetalAmarillo.bmp");
-     texMetalRojo=new Texture(2,"resources/textures/imgMetalRojo.bmp");
      texfloor= new Texture(2,"resources/textures/imgWood.bmp");
      texGotele=new Texture(2,"resources/textures/imgPared.bmp");
-     texMaderaRoja=new Texture(2,"resources/textures/imgMaderaRoja.bmp");
-     texMetro=new Texture(2,"resources/textures/imgMetro.bmp");
      texArtistico=new Texture(2,"resources/textures/artistico.bmp");
-     texMarmol=new Texture(2,"resources/textures/marmol.bmp");
      texbodyDron = new Texture(0,"resources/textures/floor3.bmp");
      // Luz ambiental global
      lightG.ambient      = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
